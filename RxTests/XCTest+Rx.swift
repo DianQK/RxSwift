@@ -70,7 +70,7 @@ public func XCTAssertEqual<T: Equatable>(lhs: [Event<T>], _ rhs: [Event<T>], fil
         return
     }
 
-    printSequenceDifferences(lhs, rhs, ==)
+    printSequenceDifferences(lhs: lhs, rhs, ==)
 }
 
 /**
@@ -99,12 +99,12 @@ public func XCTAssertEqual<T: Equatable>(lhs: [Recorded<Event<T>>], _ rhs: [Reco
         return
     }
 
-    printSequenceDifferences(lhs, rhs, ==)
+    printSequenceDifferences(lhs: lhs, rhs, ==)
 }
 
 func printSequenceDifferences<E>(lhs: [E], _ rhs: [E], _ equal: (E, E) -> Bool) {
     print("Differences:")
-    for (index, elements) in zip(lhs, rhs).enumerate() {
+    for (index, elements) in zip(lhs, rhs).enumerated() {
         let l = elements.0
         let r = elements.1
         if !equal(l, r) {
@@ -114,10 +114,10 @@ func printSequenceDifferences<E>(lhs: [E], _ rhs: [E], _ equal: (E, E) -> Bool) 
     }
 
     let shortest = min(lhs.count, rhs.count)
-    for (index, element) in lhs[shortest ..< lhs.count].enumerate() {
+    for (index, element) in lhs[shortest ..< lhs.count].enumerated() {
         print("lhs[\(index + shortest)]:\n    \(element)")
     }
-    for (index, element) in rhs[shortest ..< rhs.count].enumerate() {
+    for (index, element) in rhs[shortest ..< rhs.count].enumerated() {
         print("rhs[\(index + shortest)]:\n    \(element)")
     }
 }

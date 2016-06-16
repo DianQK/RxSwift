@@ -109,12 +109,12 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
         var subscription : Disposable? = nil
         let observer = createObserver(Element)
         
-        self.scheduleAbsoluteVirtual((), time: created) {
+        self.scheduleAbsoluteVirtual(state: (), time: created) {
             source = create()
             return NopDisposable.instance
         }
         
-        self.scheduleAbsoluteVirtual((), time: subscribed) {
+        self.scheduleAbsoluteVirtual(state: (), time: subscribed) {
             subscription = source!.subscribe(observer)
             return NopDisposable.instance
         }

@@ -203,7 +203,7 @@ extension UITableView {
     public var rx_itemMoved: ControlEvent<ItemMovedEvent> {
         let source: Observable<ItemMovedEvent> = rx_dataSource.observe(selector: #selector(UITableViewDataSource.tableView(_:moveRowAt:to:)))
             .map { a in
-                return (try castOrThrow(IndexPath.self, a[1]), try castOrThrow(NSIndexPath.self, a[2]))
+                return (try castOrThrow(IndexPath.self, a[1]), try castOrThrow(IndexPath.self, a[2]))
             }
         
         return ControlEvent(events: source)
@@ -215,7 +215,7 @@ extension UITableView {
     public var rx_willDisplayCell: ControlEvent<WillDisplayCellEvent> {
         let source: Observable<DidEndDisplayingCellEvent> = rx_delegate.observe(selector: #selector(UITableViewDelegate.tableView(_:willDisplay:forRowAt:)))
             .map { a in
-                return (try castOrThrow(UITableViewCell.self, a[1]), try castOrThrow(NSIndexPath.self, a[2]))
+                return (try castOrThrow(UITableViewCell.self, a[1]), try castOrThrow(IndexPath.self, a[2]))
             }
 
         return ControlEvent(events: source)
@@ -227,7 +227,7 @@ extension UITableView {
     public var rx_didEndDisplayingCell: ControlEvent<DidEndDisplayingCellEvent> {
         let source: Observable<DidEndDisplayingCellEvent> = rx_delegate.observe(selector: #selector(UITableViewDelegate.tableView(_:didEndDisplaying:forRowAt:)))
             .map { a in
-                return (try castOrThrow(UITableViewCell.self, a[1]), try castOrThrow(NSIndexPath.self, a[2]))
+                return (try castOrThrow(UITableViewCell.self, a[1]), try castOrThrow(IndexPath.self, a[2]))
             }
 
         return ControlEvent(events: source)

@@ -119,13 +119,13 @@ class DelegateProxyTest : RxTest {
        
         XCTAssertTrue(!mock.respondsToSelector(NSSelectorFromString("threeDView(threeDView:didGetXXX:")))
         
-        let sentArgument = NSIndexPath(index: 0)
+        let sentArgument = IndexPath(index: 0)
         
-        var receivedArgument: NSIndexPath? = nil
+        var receivedArgument: IndexPath? = nil
         
         let d = view.rx_proxy.observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didGetXXX:)))
             .subscribeNext { n in
-                let ip = n[1] as! NSIndexPath
+                let ip = n[1] as! IndexPath
                 receivedArgument = ip
             }
         defer {
@@ -150,7 +150,7 @@ class DelegateProxyTest : RxTest {
         autoreleasepool {
             XCTAssertTrue(!mock.respondsToSelector(NSSelectorFromString("threeDView:threeDView:didGetXXX:")))
             
-            let sentArgument = NSIndexPath(index: 0)
+            let sentArgument = IndexPath(index: 0)
             
             _ = view
                 .rx_proxy
@@ -226,14 +226,14 @@ class Food: NSObject {
 }
 
 @objc protocol ThreeDSectionedViewProtocol {
-    func threeDView(threeDView: ThreeDSectionedView, listenToMeee: NSIndexPath)
-    func threeDView(threeDView: ThreeDSectionedView, feedMe: NSIndexPath)
-    func threeDView(threeDView: ThreeDSectionedView, howTallAmI: NSIndexPath) -> CGFloat
+    func threeDView(threeDView: ThreeDSectionedView, listenToMeee: IndexPath)
+    func threeDView(threeDView: ThreeDSectionedView, feedMe: IndexPath)
+    func threeDView(threeDView: ThreeDSectionedView, howTallAmI: IndexPath) -> CGFloat
     
-    optional func threeDView(threeDView: ThreeDSectionedView, didGetXXX: NSIndexPath)
+    optional func threeDView(threeDView: ThreeDSectionedView, didGetXXX: IndexPath)
     optional func threeDView(threeDView: ThreeDSectionedView, didLearnSomething: String)
-    optional func threeDView(threeDView: ThreeDSectionedView, didFallAsleep: NSIndexPath)
-    optional func threeDView(threeDView: ThreeDSectionedView, getMeSomeFood: NSIndexPath) -> Food
+    optional func threeDView(threeDView: ThreeDSectionedView, didFallAsleep: IndexPath)
+    optional func threeDView(threeDView: ThreeDSectionedView, getMeSomeFood: IndexPath) -> Food
 }
 
 class ThreeDSectionedView: NSObject {
@@ -253,15 +253,15 @@ class ThreeDSectionedViewDelegateProxy : DelegateProxy
     
     // delegate
     
-    func threeDView(threeDView: ThreeDSectionedView, listenToMeee: NSIndexPath) {
+    func threeDView(threeDView: ThreeDSectionedView, listenToMeee: IndexPath) {
         
     }
     
-    func threeDView(threeDView: ThreeDSectionedView, feedMe: NSIndexPath) {
+    func threeDView(threeDView: ThreeDSectionedView, feedMe: IndexPath) {
         
     }
     
-    func threeDView(threeDView: ThreeDSectionedView, howTallAmI: NSIndexPath) -> CGFloat {
+    func threeDView(threeDView: ThreeDSectionedView, howTallAmI: IndexPath) -> CGFloat {
         return 1.1
     }
     
@@ -290,20 +290,20 @@ class MockThreeDSectionedViewProtocol : NSObject, ThreeDSectionedViewProtocol {
     
     var messages: [String] = []
     
-    func threeDView(threeDView: ThreeDSectionedView, listenToMeee: NSIndexPath) {
+    func threeDView(threeDView: ThreeDSectionedView, listenToMeee: IndexPath) {
         messages.append("listenToMeee")
     }
     
-    func threeDView(threeDView: ThreeDSectionedView, feedMe: NSIndexPath) {
+    func threeDView(threeDView: ThreeDSectionedView, feedMe: IndexPath) {
         messages.append("feedMe")
     }
     
-    func threeDView(threeDView: ThreeDSectionedView, howTallAmI: NSIndexPath) -> CGFloat {
+    func threeDView(threeDView: ThreeDSectionedView, howTallAmI: IndexPath) -> CGFloat {
         messages.append("howTallAmI")
         return 3
     }
     
-    /*func threeDView(threeDView: ThreeDSectionedView, didGetXXX: NSIndexPath) {
+    /*func threeDView(threeDView: ThreeDSectionedView, didGetXXX: IndexPath) {
         messages.append("didGetXXX")
     }*/
     
@@ -311,8 +311,8 @@ class MockThreeDSectionedViewProtocol : NSObject, ThreeDSectionedViewProtocol {
         messages.append("didLearnSomething")
     }
     
-    //optional func threeDView(threeDView: ThreeDSectionedView, didFallAsleep: NSIndexPath)
-    func threeDView(threeDView: ThreeDSectionedView, getMeSomeFood: NSIndexPath) -> Food {
+    //optional func threeDView(threeDView: ThreeDSectionedView, didFallAsleep: IndexPath)
+    func threeDView(threeDView: ThreeDSectionedView, getMeSomeFood: IndexPath) -> Food {
         messages.append("getMeSomeFood")
         return Food()
     }

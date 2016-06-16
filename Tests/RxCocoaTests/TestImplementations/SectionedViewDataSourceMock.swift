@@ -27,7 +27,7 @@ import UIKit
         super.init()
     }
 
-    func modelAtIndexPath(indexPath: NSIndexPath) throws -> Any {
+    func modelAtIndexPath(indexPath: IndexPath) throws -> Any {
         return items![indexPath.item]
     }
 
@@ -35,7 +35,7 @@ import UIKit
         return 0
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
         return UITableViewCell()
     }
 
@@ -43,7 +43,7 @@ import UIKit
         return 0
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
         return UICollectionViewCell()
     }
 

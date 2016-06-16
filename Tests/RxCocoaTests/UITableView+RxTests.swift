@@ -31,14 +31,14 @@ class UITableViewTests : RxTest {
     func testTableView_itemSelected() {
         let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
 
-        var resultIndexPath: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
 
         let subscription = tableView.rx_itemSelected
             .subscribeNext { indexPath in
                 resultIndexPath = indexPath
             }
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
+        let testRow = IndexPath(forRow: 1, inSection: 0)
         tableView.delegate!.tableView!(tableView, didSelectRowAtIndexPath: testRow)
 
         XCTAssertEqual(resultIndexPath, testRow)
@@ -48,14 +48,14 @@ class UITableViewTests : RxTest {
     func testTableView_itemDeselected() {
         let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
 
-        var resultIndexPath: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
 
         let subscription = tableView.rx_itemDeselected
             .subscribeNext { indexPath in
                 resultIndexPath = indexPath
             }
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
+        let testRow = IndexPath(forRow: 1, inSection: 0)
         tableView.delegate!.tableView!(tableView, didDeselectRowAtIndexPath: testRow)
 
         XCTAssertEqual(resultIndexPath, testRow)
@@ -65,14 +65,14 @@ class UITableViewTests : RxTest {
     func testTableView_itemAccessoryButtonTapped() {
         let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
 
-        var resultIndexPath: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
 
         let subscription = tableView.rx_itemAccessoryButtonTapped
             .subscribeNext { indexPath in
                 resultIndexPath = indexPath
             }
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
+        let testRow = IndexPath(forRow: 1, inSection: 0)
         tableView.delegate!.tableView!(tableView, accessoryButtonTappedForRowWithIndexPath: testRow)
 
         XCTAssertEqual(resultIndexPath, testRow)
@@ -82,14 +82,14 @@ class UITableViewTests : RxTest {
     func testTableView_itemDeleted() {
         let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
 
-        var resultIndexPath: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
 
         let subscription = tableView.rx_itemDeleted
             .subscribeNext { indexPath in
                 resultIndexPath = indexPath
             }
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
+        let testRow = IndexPath(forRow: 1, inSection: 0)
         tableView.dataSource!.tableView!(tableView, commitEditingStyle: .Delete, forRowAtIndexPath:  testRow)
 
         XCTAssertEqual(resultIndexPath, testRow)
@@ -99,14 +99,14 @@ class UITableViewTests : RxTest {
     func testTableView_itemInserted() {
         let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
 
-        var resultIndexPath: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
 
         let subscription = tableView.rx_itemInserted
             .subscribeNext { indexPath in
                 resultIndexPath = indexPath
             }
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
+        let testRow = IndexPath(forRow: 1, inSection: 0)
         tableView.dataSource!.tableView!(tableView, commitEditingStyle: .Insert, forRowAtIndexPath:  testRow)
 
         XCTAssertEqual(resultIndexPath, testRow)
@@ -116,7 +116,7 @@ class UITableViewTests : RxTest {
     func testTableView_willDisplayCell() {
         let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
 
-        var resultIndexPath: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
         var resultCell: UITableViewCell? = nil
 
         let subscription = tableView.rx_willDisplayCell
@@ -125,7 +125,7 @@ class UITableViewTests : RxTest {
                 resultCell = cell
             }
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
+        let testRow = IndexPath(forRow: 1, inSection: 0)
         let testCell = UITableViewCell()
         tableView.delegate!.tableView!(tableView, willDisplayCell: testCell, forRowAtIndexPath: testRow)
 
@@ -137,7 +137,7 @@ class UITableViewTests : RxTest {
     func testTableView_didEndDisplayingCell() {
         let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
 
-        var resultIndexPath: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
         var resultCell: UITableViewCell? = nil
 
         let subscription = tableView.rx_didEndDisplayingCell
@@ -146,7 +146,7 @@ class UITableViewTests : RxTest {
                 resultCell = cell
             }
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
+        let testRow = IndexPath(forRow: 1, inSection: 0)
         let testCell = UITableViewCell()
         tableView.delegate!.tableView!(tableView, didEndDisplayingCell: testCell, forRowAtIndexPath: testRow)
 
@@ -158,8 +158,8 @@ class UITableViewTests : RxTest {
     func testTableView_itemMoved() {
         let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
 
-        var resultIndexPath: NSIndexPath? = nil
-        var resultIndexPath2: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
+        var resultIndexPath2: IndexPath? = nil
 
         let subscription = tableView.rx_itemMoved
             .subscribeNext { (indexPath, indexPath2) in
@@ -167,8 +167,8 @@ class UITableViewTests : RxTest {
                 resultIndexPath2 = indexPath2
             }
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
-        let testRow2 = NSIndexPath(forRow: 1, inSection: 0)
+        let testRow = IndexPath(forRow: 1, inSection: 0)
+        let testRow2 = IndexPath(forRow: 1, inSection: 0)
         tableView.dataSource!.tableView!(tableView, moveRowAtIndexPath: testRow, toIndexPath: testRow2)
 
         XCTAssertEqual(resultIndexPath, testRow)
@@ -241,7 +241,7 @@ class UITableViewTests : RxTest {
                 selectedItem = item
         }
         
-        tableView.delegate!.tableView!(tableView, didSelectRowAtIndexPath: NSIndexPath(forRow: 1, inSection: 0))
+        tableView.delegate!.tableView!(tableView, didSelectRowAtIndexPath: IndexPath(forRow: 1, inSection: 0))
         
         XCTAssertEqual(selectedItem, 2)
         
@@ -271,7 +271,7 @@ class UITableViewTests : RxTest {
                 selectedItem = item
         }
 
-        tableView.delegate!.tableView!(tableView, didSelectRowAtIndexPath: NSIndexPath(forRow: 1, inSection: 0))
+        tableView.delegate!.tableView!(tableView, didSelectRowAtIndexPath: IndexPath(forRow: 1, inSection: 0))
 
         XCTAssertEqual(selectedItem, 2)
 
@@ -300,7 +300,7 @@ class UITableViewTests : RxTest {
                 selectedItem = item
             }
 
-        tableView.delegate!.tableView!(tableView, didDeselectRowAtIndexPath: NSIndexPath(forRow: 1, inSection: 0))
+        tableView.delegate!.tableView!(tableView, didDeselectRowAtIndexPath: IndexPath(forRow: 1, inSection: 0))
 
         XCTAssertEqual(selectedItem, 2)
 
@@ -330,7 +330,7 @@ class UITableViewTests : RxTest {
                 selectedItem = item
             }
 
-        tableView.delegate!.tableView!(tableView, didDeselectRowAtIndexPath: NSIndexPath(forRow: 1, inSection: 0))
+        tableView.delegate!.tableView!(tableView, didDeselectRowAtIndexPath: IndexPath(forRow: 1, inSection: 0))
         
         XCTAssertEqual(selectedItem, 2)
         
@@ -352,7 +352,7 @@ class UITableViewTests : RxTest {
 
         let (tableView, dataSourceSubscription) = createView()
 
-        let model: Int = try! tableView.rx_modelAtIndexPath(NSIndexPath(forItem: 1, inSection: 0))
+        let model: Int = try! tableView.rx_modelAtIndexPath(IndexPath(forItem: 1, inSection: 0))
 
         XCTAssertEqual(model, 2)
         

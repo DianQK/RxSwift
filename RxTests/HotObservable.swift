@@ -31,8 +31,8 @@ class HotObservable<Element>
         super.init(testScheduler: testScheduler, recordedEvents: recordedEvents)
 
         for recordedEvent in recordedEvents {
-            testScheduler.scheduleAt(recordedEvent.time) { t in
-                self._observers.on(recordedEvent.value)
+            testScheduler.scheduleAt(time: recordedEvent.time) { t in
+                self._observers.on(event: recordedEvent.value)
             }
         }
     }
@@ -41,13 +41,13 @@ class HotObservable<Element>
      Subscribes `observer` to receive events for this sequence.
      */
     override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
-        let key = _observers.insert(AnyObserver(observer))
+        let key = _observers.insert(element: AnyObserver(observer))
         subscriptions.append(Subscription(self.testScheduler.clock))
         
         let i = self.subscriptions.count - 1
         
         return AnonymousDisposable {
-            let removed = self._observers.removeKey(key)
+            let removed = self._observers.removeKey(key: key)
             assert(removed != nil)
             
             let existing = self.subscriptions[i]

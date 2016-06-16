@@ -27,14 +27,14 @@ class UICollectionViewTests : RxTest {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: CGRectMake(0, 0, 1, 1), collectionViewLayout: layout)
 
-        var resultIndexPath: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
 
         let subscription = collectionView.rx_itemSelected
             .subscribeNext { indexPath in
                 resultIndexPath = indexPath
             }
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
+        let testRow = IndexPath(forRow: 1, inSection: 0)
         collectionView.delegate!.collectionView!(collectionView, didSelectItemAtIndexPath: testRow)
 
         XCTAssertEqual(resultIndexPath, testRow)
@@ -45,14 +45,14 @@ class UICollectionViewTests : RxTest {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: CGRectMake(0, 0, 1, 1), collectionViewLayout: layout)
 
-        var resultIndexPath: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
 
         let subscription = collectionView.rx_itemDeselected
             .subscribeNext { indexPath in
                 resultIndexPath = indexPath
             }
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
+        let testRow = IndexPath(forRow: 1, inSection: 0)
         collectionView.delegate!.collectionView!(collectionView, didDeselectItemAtIndexPath: testRow)
 
         XCTAssertEqual(resultIndexPath, testRow)
@@ -132,7 +132,7 @@ class UICollectionViewTests : RxTest {
                 selectedItem = item
             }
 
-        collectionView.delegate!.collectionView!(collectionView, didSelectItemAtIndexPath: NSIndexPath(forRow: 1, inSection: 0))
+        collectionView.delegate!.collectionView!(collectionView, didSelectItemAtIndexPath: IndexPath(forRow: 1, inSection: 0))
 
         XCTAssertEqual(selectedItem, 2)
 
@@ -163,7 +163,7 @@ class UICollectionViewTests : RxTest {
                 selectedItem = item
             }
 
-        collectionView.delegate!.collectionView!(collectionView, didSelectItemAtIndexPath: NSIndexPath(forRow: 1, inSection: 0))
+        collectionView.delegate!.collectionView!(collectionView, didSelectItemAtIndexPath: IndexPath(forRow: 1, inSection: 0))
 
         XCTAssertEqual(selectedItem, 2)
         
@@ -194,7 +194,7 @@ class UICollectionViewTests : RxTest {
                 selectedItem = item
         }
 
-        collectionView.delegate!.collectionView!(collectionView, didDeselectItemAtIndexPath: NSIndexPath(forRow: 1, inSection: 0))
+        collectionView.delegate!.collectionView!(collectionView, didDeselectItemAtIndexPath: IndexPath(forRow: 1, inSection: 0))
 
         XCTAssertEqual(selectedItem, 2)
 
@@ -225,7 +225,7 @@ class UICollectionViewTests : RxTest {
                 selectedItem = item
             }
 
-        collectionView.delegate!.collectionView!(collectionView, didDeselectItemAtIndexPath: NSIndexPath(forRow: 1, inSection: 0))
+        collectionView.delegate!.collectionView!(collectionView, didDeselectItemAtIndexPath: IndexPath(forRow: 1, inSection: 0))
         
         XCTAssertEqual(selectedItem, 2)
         
@@ -248,7 +248,7 @@ class UICollectionViewTests : RxTest {
         }
         let (collectionView, dataSourceSubscription) = createView()
 
-        let model: Int = try! collectionView.rx_modelAtIndexPath(NSIndexPath(forItem: 1, inSection: 0))
+        let model: Int = try! collectionView.rx_modelAtIndexPath(IndexPath(forItem: 1, inSection: 0))
 
         XCTAssertEqual(model, 2)
 
