@@ -69,7 +69,7 @@ extension ObservableConcurrencyTest {
     // tests
 
     func testObserveOnDispatchQueue_DoesPerformWorkOnQueue() {
-        let unitTestsThread = NSThread.currentThread()
+        let unitTestsThread = Thread.currentThread()
 
         var didExecute = false
 
@@ -78,7 +78,7 @@ extension ObservableConcurrencyTest {
                 .observeOn(scheduler)
             return observable .subscribeNext { n in
                 didExecute = true
-                XCTAssert(NSThread.currentThread() !== unitTestsThread)
+                XCTAssert(Thread.currentThread() !== unitTestsThread)
             }
         }
 
@@ -309,7 +309,7 @@ extension ObservableConcurrencyTest {
 class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBase {
 
     func createScheduler() -> ImmediateSchedulerType {
-        let operationQueue = NSOperationQueue()
+        let operationQueue = OperationQueue()
         operationQueue.maxConcurrentOperationCount = 8
         return OperationQueueScheduler(operationQueue: operationQueue)
     }

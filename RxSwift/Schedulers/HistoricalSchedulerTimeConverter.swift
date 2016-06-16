@@ -71,7 +71,7 @@ public struct HistoricalSchedulerTimeConverter : VirtualTimeConverterType {
      Compares two `NSDate`s.
     */
     public func compareVirtualTime(lhs: VirtualTimeUnit, _ rhs: VirtualTimeUnit) -> VirtualTimeComparison {
-        switch lhs.compare(rhs) {
+        switch lhs.compare(rhs as Date) {
         case .orderedAscending:
             return .LessThan
         case .orderedSame:

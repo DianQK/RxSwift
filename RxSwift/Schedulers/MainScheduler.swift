@@ -20,12 +20,12 @@ operator please use `ConcurrentMainScheduler` because it is more optimized for t
 */
 public final class MainScheduler : SerialDispatchQueueScheduler {
 
-    private let _mainQueue: dispatch_queue_t
+    private let _mainQueue: DispatchQueue
 
     var numberEnqueued: AtomicInt = 0
 
     private init() {
-        _mainQueue = dispatch_get_main_queue()
+        _mainQueue = DispatchQueue.main
         super.init(serialQueue: _mainQueue)
     }
 
@@ -38,13 +38,13 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
     Singleton instance of `MainScheduler` that always schedules work asynchronously
     and doesn't perform optimizations for calls scheduled from main thread.
     */
-    public static let asyncInstance = SerialDispatchQueueScheduler(serialQueue: dispatch_get_main_queue())
+    public static let asyncInstance = SerialDispatchQueueScheduler(serialQueue: DispatchQueue.main)
 
     /**
     In case this method is called on a background thread it will throw an exception.
     */
     public class func ensureExecutingOnScheduler() {
-        if !NSThread.current().isMainThread {
+        if !Thread.current().isMainThread {
             rxFatalError("Executing on backgound thread. Please use `MainScheduler.instance.schedule` to schedule work on main thread.")
         }
     }
@@ -52,7 +52,7 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
     override func scheduleInternal<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable {
         let currentNumberEnqueued = AtomicIncrement(&numberEnqueued)
 
-        if NSThread.current().isMainThread && currentNumberEnqueued == 1 {
+        if Thread.current().isMainThread && currentNumberEnqueued == 1 {
             let disposable = action(state)
             AtomicDecrement(&numberEnqueued)
             return disposable
@@ -60,7 +60,7 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
 
         let cancel = SingleAssignmentDisposable()
 
-        dispatch_async(_mainQueue) {
+        _mainQueue.asynchronously() {
             if !cancel.disposed {
                 action(state)
             }

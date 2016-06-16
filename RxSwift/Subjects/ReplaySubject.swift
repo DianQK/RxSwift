@@ -77,7 +77,7 @@ class ReplayBufferBase<Element>
     : ReplaySubject<Element>
     , SynchronizedUnsubscribeType {
     
-    private var _lock = NSRecursiveLock()
+    private var _lock = RecursiveLock()
 
     // state
     private var _disposed = false

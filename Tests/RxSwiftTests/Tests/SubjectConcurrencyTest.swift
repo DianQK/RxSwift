@@ -54,7 +54,7 @@ extension SubjectConcurrencyTest {
                 }
 
                 // if other thread can't fulfill the condition in 0.5 sek, that means it is synchronized
-                NSThread.sleepForTimeInterval(0.5)
+                Thread.sleepForTimeInterval(0.5)
 
                 XCTAssertEqual(state, 1)
 

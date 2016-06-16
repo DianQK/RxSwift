@@ -22,7 +22,7 @@ public final class BehaviorSubject<Element>
     public typealias SubjectObserverType = BehaviorSubject<Element>
     typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
     
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
     
     // state
     private var _disposed = false
