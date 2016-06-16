@@ -20,5 +20,5 @@ public protocol SectionedViewDataSourceType {
      - parameter indexPath: Model index path 
      - returns: Model at index path.
     */
-    func modelAtIndexPath(indexPath: NSIndexPath) throws -> Any
+    func modelAt(indexPath: IndexPath) throws -> Any
 }

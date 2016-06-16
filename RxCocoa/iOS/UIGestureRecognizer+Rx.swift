@@ -18,7 +18,7 @@ import RxSwift
 class GestureTarget: RxTarget {
     typealias Callback = (UIGestureRecognizer) -> Void
     
-    let selector = #selector(ControlTarget.eventHandler(_:))
+    let selector = #selector(ControlTarget.eventHandler(sender:))
     
     weak var gestureRecognizer: UIGestureRecognizer?
     var callback: Callback?
@@ -31,7 +31,7 @@ class GestureTarget: RxTarget {
         
         gestureRecognizer.addTarget(self, action: selector)
 
-        let method = self.methodForSelector(selector)
+        let method = self.method(for: selector)
         if method == nil {
             fatalError("Can't find method")
         }

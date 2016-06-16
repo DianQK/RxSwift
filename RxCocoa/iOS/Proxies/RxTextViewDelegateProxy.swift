@@ -47,9 +47,8 @@ public class RxTextViewDelegateProxy
          we wouldn't need to change the public interface.
         */
         let forwardToDelegate = self.forwardToDelegate() as? UITextViewDelegate
-        return forwardToDelegate?.textView?(textView,
-            shouldChangeTextInRange: range,
-            replacementText: text) ?? true
+        
+        return forwardToDelegate?.textView!(textView, shouldChangeTextIn: range, replacementText: text) ?? true
     }
 }
 

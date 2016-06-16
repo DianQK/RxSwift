@@ -25,7 +25,7 @@ extension UIDatePicker {
             getter: { datePicker in
                 datePicker.date
             }, setter: { datePicker, value in
-                datePicker.date = value
+                datePicker.date = value as Date
             }
         )
     }

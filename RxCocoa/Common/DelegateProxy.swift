@@ -50,11 +50,11 @@ public class DelegateProxy : _RXDelegateProxy {
     - returns: Observable sequence of arguments passed to `selector` method.
     */
     public func observe(selector: Selector) -> Observable<[AnyObject]> {
-        if hasWiredImplementationForSelector(selector) {
+        if hasWiredImplementation(for: selector) {
             print("Delegate proxy is already implementing `\(selector)`, a more performant way of registering might exist.")
         }
 
-        if !self.respondsToSelector(selector) {
+        if !self.responds(to: selector) {
             rxFatalError("This class doesn't respond to selector \(selector)")
         }
         
@@ -73,7 +73,7 @@ public class DelegateProxy : _RXDelegateProxy {
     // proxy
     
     public override func interceptedSelector(_ selector: Selector, withArguments arguments: [AnyObject]!) {
-        subjectsForSelector[selector]?.on(.Next(arguments))
+        subjectsForSelector[selector]?.on(event: .Next(arguments))
     }
     
     /**
@@ -82,7 +82,7 @@ public class DelegateProxy : _RXDelegateProxy {
     - returns: Associated object tag.
     */
     public class func delegateAssociatedObjectTag() -> UnsafePointer<Void> {
-        return _pointer(&delegateAssociatedTag)
+        return _pointer(p: &delegateAssociatedTag)
     }
     
     /**
@@ -112,7 +112,7 @@ public class DelegateProxy : _RXDelegateProxy {
     - parameter proxy: Delegate proxy object to assign to `object`.
     */
     public class func assignProxy(proxy: AnyObject, toObject object: AnyObject) {
-        precondition(proxy.isKindOfClass(self.classForCoder()))
+        precondition(proxy.isKind(of: self.classForCoder()))
        
         objc_setAssociatedObject(object, self.delegateAssociatedObjectTag(), proxy, .OBJC_ASSOCIATION_RETAIN)
     }
@@ -125,7 +125,7 @@ public class DelegateProxy : _RXDelegateProxy {
     - parameter retainDelegate: Should `self` retain `forwardToDelegate`.
     */
     public func setForwardToDelegate(forwardToDelegate delegate: AnyObject?, retainDelegate: Bool) {
-        self._setForwardToDelegate(delegate, retainDelegate: retainDelegate)
+        self._setForward(toDelegate: delegate, retainDelegate: retainDelegate)
     }
    
     /**
@@ -140,7 +140,7 @@ public class DelegateProxy : _RXDelegateProxy {
     
     deinit {
         for v in subjectsForSelector.values {
-            v.on(.Completed)
+            v.on(event: .Completed)
         }
 #if TRACE_RESOURCES
         OSAtomicDecrement32(&resourceCount)

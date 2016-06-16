@@ -57,7 +57,7 @@ func observeWeaklyKeyPathFor(target: NSObject, keyPath: String, options: NSKeyVa
     let observable = observeWeaklyKeyPathFor(target: target, keyPathSections: components, options: options)
         .finishWithNilWhenDealloc(target: target)
  
-    if !options.intersect(.initial).isEmpty {
+    if !options.intersection(.initial).isEmpty {
         return observable
     }
     else {
@@ -101,7 +101,7 @@ func observeWeaklyKeyPathFor(
     
     let property = class_getProperty(object_getClass(target), propertyName)
     if property == nil {
-        return Observable.error(RxCocoaError.InvalidPropertyName(object: target, propertyName: propertyName))
+        return Observable.error(RxCocoaError.invalidPropertyName(object: target, propertyName: propertyName))
     }
     let propertyAttributes = property_getAttributes(property)
     
@@ -120,7 +120,7 @@ func observeWeaklyKeyPathFor(
             let strongTarget: AnyObject? = weakTarget
             
             if nextObject == nil {
-                return Observable.error(RxCocoaError.InvalidObjectOnKeyPath(object: nextTarget!, sourceObject: strongTarget ?? NSNull(), propertyName: propertyName))
+                return Observable.error(RxCocoaError.invalidObjectOnKeyPath(object: nextTarget!, sourceObject: strongTarget ?? NSNull(), propertyName: propertyName))
             }
 
             // if target is alive, then send change

@@ -31,11 +31,11 @@ class _RxCollectionViewReactiveArrayDataSource
         return _collectionView(collectionView, numberOfItemsInSection: section)
     }
 
-    func _collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
+    private func _collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         rxAbstractMethod()
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return _collectionView(collectionView, cellForItemAt: indexPath)
     }
 }
@@ -67,14 +67,14 @@ class RxCollectionViewReactiveArrayDataSource<Element>
     
     var itemModels: [Element]? = nil
     
-    func modelAtIndex(index: Int) -> Element? {
+    func modelAt(index: Int) -> Element? {
         return itemModels?[index]
     }
 
-    func modelAtIndexPath(indexPath: NSIndexPath) throws -> Any {
+    func modelAt(indexPath: IndexPath) throws -> Any {
         precondition(indexPath.section == 0)
-        guard let item = itemModels?[indexPath.item] else {
-            throw RxCocoaError.ItemsNotYetBound(object: self)
+        guard let item = itemModels?[indexPath.item!] else {
+            throw RxCocoaError.itemsNotYetBound(object: self)
         }
         return item
     }
@@ -91,8 +91,8 @@ class RxCollectionViewReactiveArrayDataSource<Element>
         return itemModels?.count ?? 0
     }
     
-    override func _collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
-        return cellFactory(collectionView, indexPath.item, itemModels![indexPath.item])
+    override func _collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return cellFactory(collectionView, indexPath.item!, itemModels![indexPath.item!])
     }
     
     // reactive

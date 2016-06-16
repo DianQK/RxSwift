@@ -23,31 +23,31 @@ public enum RxCocoaError
     /**
     Unknown error has occurred.
     */
-    case Unknown
+    case unknown
     /**
     Invalid operation was attempted.
     */
-    case InvalidOperation(object: AnyObject)
+    case invalidOperation(object: AnyObject)
     /**
     Items are not yet bound to user interface but have been requested.
     */
-    case ItemsNotYetBound(object: AnyObject)
+    case itemsNotYetBound(object: AnyObject)
     /**
     Invalid KVO Path.
     */
-    case InvalidPropertyName(object: AnyObject, propertyName: String)
+    case invalidPropertyName(object: AnyObject, propertyName: String)
     /**
     Invalid object on key path.
     */
-    case InvalidObjectOnKeyPath(object: AnyObject, sourceObject: AnyObject, propertyName: String)
+    case invalidObjectOnKeyPath(object: AnyObject, sourceObject: AnyObject, propertyName: String)
     /**
     Error during swizzling.
     */
-    case ErrorDuringSwizzling
+    case errorDuringSwizzling
     /*
      Casting error.
      */
-    case CastingError(object: AnyObject, targetType: Any.Type)
+    case castingError(object: AnyObject, targetType: Any.Type)
 }
 
 #if !DISABLE_SWIZZLING
@@ -165,19 +165,19 @@ public extension RxCocoaError {
      */
     public var debugDescription: String {
         switch self {
-        case .Unknown:
+        case .unknown:
             return "Unknown error occurred."
-        case let .InvalidOperation(object):
+        case let .invalidOperation(object):
             return "Invalid operation was attempted on `\(object)`."
-        case let .ItemsNotYetBound(object):
+        case let .itemsNotYetBound(object):
             return "Data source is set, but items are not yet bound to user interface for `\(object)`."
-        case let .InvalidPropertyName(object, propertyName):
+        case let .invalidPropertyName(object, propertyName):
             return "Object `\(object)` dosn't have a property named `\(propertyName)`."
-        case let .InvalidObjectOnKeyPath(object, sourceObject, propertyName):
+        case let .invalidObjectOnKeyPath(object, sourceObject, propertyName):
             return "Unobservable object `\(object)` was observed as `\(propertyName)` of `\(sourceObject)`."
-        case .ErrorDuringSwizzling:
+        case .errorDuringSwizzling:
             return "Error during swizzling."
-        case .CastingError(let object, let targetType):
+        case .castingError(let object, let targetType):
             return "Error casting `\(object)` to `\(targetType)`"
         }
     }
@@ -251,7 +251,7 @@ func castOptionalOrFatalError<T>(_ value: AnyObject?) -> T? {
 
 func castOrThrow<T>(_ resultType: T.Type, _ object: AnyObject) throws -> T {
     guard let returnValue = object as? T else {
-        throw RxCocoaError.CastingError(object: object, targetType: resultType)
+        throw RxCocoaError.castingError(object: object, targetType: resultType)
     }
 
     return returnValue
@@ -263,7 +263,7 @@ func castOptionalOrThrow<T>(_ resultType: T.Type, _ object: AnyObject) throws ->
     }
 
     guard let returnValue = object as? T else {
-        throw RxCocoaError.CastingError(object: object, targetType: resultType)
+        throw RxCocoaError.castingError(object: object, targetType: resultType)
     }
 
     return returnValue

@@ -19,7 +19,7 @@ class _RxTableViewReactiveArrayDataSource
     : NSObject
     , UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    private func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
    
@@ -31,11 +31,11 @@ class _RxTableViewReactiveArrayDataSource
         return _tableView(tableView, numberOfRowsInSection: section)
     }
 
-    func _tableView(tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
+    private func _tableView(tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         rxAbstractMethod()
     }
 
-    func tableView(tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return _tableView(tableView: tableView, cellForRowAt: indexPath)
     }
 }
@@ -66,14 +66,14 @@ class RxTableViewReactiveArrayDataSource<Element>
     
     var itemModels: [Element]? = nil
     
-    func modelAtIndex(index: Int) -> Element? {
+    func modelAt(index: Int) -> Element? {
         return itemModels?[index]
     }
 
-    func modelAtIndexPath(indexPath: NSIndexPath) throws -> Any {
+    func modelAt(indexPath: IndexPath) throws -> Any {
         precondition(indexPath.section == 0)
-        guard let item = itemModels?[indexPath.item] else {
-            throw RxCocoaError.ItemsNotYetBound(object: self)
+        guard let item = itemModels?[indexPath.item!] else {
+            throw RxCocoaError.itemsNotYetBound(object: self)
         }
         return item
     }
@@ -88,8 +88,8 @@ class RxTableViewReactiveArrayDataSource<Element>
         return itemModels?.count ?? 0
     }
     
-    override func _tableView(_ tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
-        return cellFactory(tableView, indexPath.item, itemModels![indexPath.row])
+    override func _tableView(tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return cellFactory(tableView, indexPath.item!, itemModels![indexPath.row])
     }
     
     // reactive
